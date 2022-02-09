@@ -1,13 +1,8 @@
 import './App.scss';
-import Sample from './components/Sample';
+import Index from './components/Index';
 
 function App() {
-  return (
-    <>
-      <h1>Hi</h1>
-      <Sample />
-    </>
-  );
+  return <Index />;
 }
 
 export default App;
