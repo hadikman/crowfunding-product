@@ -1,6 +1,8 @@
+import {useState} from 'react';
 import {useMediaQuery} from 'react-responsive';
 import Wrapper from './Wrapper';
 import Image from './Image';
+import MobileMenu from './MobileMenu';
 import SingleProduct from './SingleProduct';
 import SingleBacked from './SingleBacked';
 import data from '../store/data';
@@ -10,7 +12,12 @@ import '../scss/styles.scss';
 document.title = 'Crowdfunding Product';
 
 export default function Index() {
+  const [isMobileMenu, setIsMobieMenu] = useState(false);
   const is375px = useMediaQuery({query: '(max-width: 375px)'});
+
+  function mobileMenuHandler() {
+    setIsMobieMenu(preState => !preState);
+  }
 
   const heroImage = is375px ? (
     <Image
@@ -31,13 +38,25 @@ export default function Index() {
       <header className="header">
         <div className="header-hero-wrapper">
           {heroImage}
+          {isMobileMenu && <div className="overlay"></div>}
+          {isMobileMenu && <MobileMenu />}
           <div className="navbar">
             <Image fileName="logo.svg" altImage="logo" classes="logo" />
-            <Image
-              fileName="icon-hamburger.svg"
-              altImage="hamburger menu"
-              classes="navbar-mobile"
-            />
+            {!isMobileMenu ? (
+              <Image
+                fileName="icon-hamburger.svg"
+                altImage="hamburger menu"
+                classes="navbar-mobile"
+                onClick={mobileMenuHandler}
+              />
+            ) : (
+              <Image
+                fileName="icon-close-menu.svg"
+                altImage="close menu"
+                classes="navbar-mobile"
+                onClick={mobileMenuHandler}
+              />
+            )}
             <nav className="navbar-desktop">
               <a href="#" className="navbar-desktop-link">
                 about
