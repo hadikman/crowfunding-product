@@ -16,10 +16,7 @@ export default function MobileMenu() {
 
   return (
     <React.Fragment>
-      {ReactDOM.createPortal(
-        <MobileMenu />,
-        document.getElementById('mobile-menu')
-      )}
+      {ReactDOM.createPortal(<MobileMenu />, document.getElementById('modal'))}
     </React.Fragment>
   );
 }

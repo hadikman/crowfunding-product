@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState} from 'react';
 import {useMediaQuery} from 'react-responsive';
 import Wrapper from './Wrapper';
@@ -5,7 +6,9 @@ import Image from './Image';
 import MobileMenu from './MobileMenu';
 import SingleProduct from './SingleProduct';
 import SingleBacked from './SingleBacked';
-import data from '../store/data';
+import BackProjectModal from './BackProject';
+import Overlay from './Overlay';
+import {data} from '../store/data';
 
 import '../scss/styles.scss';
 
@@ -13,10 +16,19 @@ document.title = 'Crowdfunding Product';
 
 export default function Index() {
   const [isMobileMenu, setIsMobieMenu] = useState(false);
+  const [isBackProject, setIsBackProject] = useState(false);
   const is375px = useMediaQuery({query: '(max-width: 375px)'});
 
   function mobileMenuHandler() {
     setIsMobieMenu(preState => !preState);
+  }
+
+  function backProjectHandler() {
+    setIsBackProject(prevState => !prevState);
+  }
+
+  function closeBackModalHandler() {
+    setIsBackProject(preState => !preState);
   }
 
   const heroImage = is375px ? (
@@ -33,12 +45,14 @@ export default function Index() {
     />
   );
 
+  const products = data.filter(prd => prd.pledge !== null);
+
   return (
     <Wrapper>
       <header className="header">
         <div className="header-hero-wrapper">
           {heroImage}
-          {isMobileMenu && <div className="overlay"></div>}
+          {isMobileMenu && <Overlay indexLayer="1" />}
           {isMobileMenu && <MobileMenu />}
           <div className="navbar">
             <Image fileName="logo.svg" altImage="logo" classes="logo" />
@@ -71,6 +85,10 @@ export default function Index() {
           </div>
         </div>
 
+        {isBackProject && <Overlay indexLayer="11" overlayColor="dark" />}
+        {isBackProject && (
+          <BackProjectModal closeHandler={closeBackModalHandler} />
+        )}
         <main className="container">
           <section className="introduce">
             <Image
@@ -86,7 +104,11 @@ export default function Index() {
               strain.
             </p>
             <div className="btn-container">
-              <button type="button" className="btn-primary">
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={backProjectHandler}
+              >
                 Back this project
               </button>
               <button type="button" className="btn-bookmark">
@@ -133,7 +155,7 @@ export default function Index() {
               extra desk space below your computer to allow notepads, pens, and
               USB stickss to be sorted under the stand.
             </p>
-            {data.map(prd => {
+            {products.map(prd => {
               return (
                 <SingleProduct
                   key={prd.product}

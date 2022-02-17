@@ -1,4 +1,10 @@
-const data = [
+export const data = [
+  {
+    product: 'pledge with no reward',
+    pledge: null,
+    info: 'Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to recieve product updates via email.',
+    left: null,
+  },
   {
     product: 'bamboo stand',
     pledge: 25,
@@ -18,5 +24,3 @@ const data = [
     left: 0,
   },
 ];
-
-export default data;
