@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useMediaQuery} from 'react-responsive';
 import Image from './Image';
 import {data} from '../store/data';
 
@@ -18,16 +19,22 @@ export default function BackProjectModal(props) {
     pledgeInput > 0 ? setSubmitedPledge(true) : setSubmitedPledge(false);
   }
 
+  const is375 = useMediaQuery({query: '(max-width: 376px'});
+
   component = (
     <div className="back-project-modal">
       <div className="header">
         <h3>Back This Project</h3>
-        <Image
-          fileName="icon-close-modal.svg"
-          altImage="close modal"
-          classes="icon-close-menu"
-          onClick={closeModalHandler}
-        />
+        <span className="icon close" onClick={closeModalHandler}>
+          <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M11.314 0l2.828 2.828L9.9 7.071l4.243 4.243-2.828 2.828L7.07 9.9l-4.243 4.243L0 11.314 4.242 7.07 0 2.828 2.828 0l4.243 4.242L11.314 0z"
+              fill="#000"
+              fillRule="evenodd"
+              opacity=".4"
+            />
+          </svg>
+        </span>
       </div>
       <p className="header-info">
         Want to support us in bringing Mastercraft Bamboo Monitor Riser out in
@@ -37,9 +44,9 @@ export default function BackProjectModal(props) {
         return (
           <section
             key={prd.product}
-            className={`${prd.left === 0 ? 'disabled' : ''} ${
-              index === selectedPledge ? 'active' : ''
-            } pledge-single`}
+            className={`${prd.left === 0 ? 'disabled ' : ''}${
+              index === selectedPledge ? 'active ' : ''
+            }pledge-single`}
           >
             <div className="pledge-header">
               <label className="input-wrapper">
@@ -67,20 +74,23 @@ export default function BackProjectModal(props) {
                     Pledge ${prd.pledge} or more
                   </label>
                 )}
+                {!is375 && prd.left !== null && (
+                  <p>
+                    <span>{prd.left}</span>left
+                  </p>
+                )}
               </div>
             </div>
             <p>{prd.info}</p>
-            {prd.left !== null ? (
+            {is375 && prd.left !== null && (
               <p>
                 <span>{prd.left}</span>left
               </p>
-            ) : (
-              ''
             )}
             {selectedPledge === index && (
               <React.Fragment>
+                <hr />
                 <div className="enter-pledge">
-                  <hr />
                   <p>Enter your pledge</p>
                   <div className="enter-pledge-inputs">
                     <label>
@@ -105,7 +115,11 @@ export default function BackProjectModal(props) {
   if (submitedPledge) {
     component = (
       <div className="back-project-modal success-modal">
-        <Image fileName="icon-check.svg" altImage="close modal" />
+        <Image
+          fileName="icon-check.svg"
+          altImage="close modal"
+          classes="icon-success"
+        />
         <h3>Thanks for your support!</h3>
         <p>
           Your pledge brings us one step closer to sharing Mastercraft Bamboo

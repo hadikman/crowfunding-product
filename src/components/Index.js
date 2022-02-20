@@ -17,18 +17,20 @@ document.title = 'Crowdfunding Product';
 export default function Index() {
   const [isMobileMenu, setIsMobieMenu] = useState(false);
   const [isBackProject, setIsBackProject] = useState(false);
-  const is375px = useMediaQuery({query: '(max-width: 375px)'});
+  const is375px = useMediaQuery({query: '(max-width: 376px)'});
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   function mobileMenuHandler() {
     setIsMobieMenu(preState => !preState);
   }
-
   function backProjectHandler() {
     setIsBackProject(prevState => !prevState);
   }
-
   function closeBackModalHandler() {
     setIsBackProject(preState => !preState);
+  }
+  function bookmarkHandler() {
+    setIsBookmarked(prevState => !prevState);
   }
 
   const heroImage = is375px ? (
@@ -49,8 +51,8 @@ export default function Index() {
 
   return (
     <Wrapper>
-      <header className="header">
-        <div className="header-hero-wrapper">
+      <div className="wrapper">
+        <header className="header-hero-wrapper">
           {heroImage}
           {isMobileMenu && <Overlay indexLayer="1" />}
           {isMobileMenu && <MobileMenu />}
@@ -83,7 +85,7 @@ export default function Index() {
               </a>
             </nav>
           </div>
-        </div>
+        </header>
 
         {isBackProject && <Overlay indexLayer="11" overlayColor="dark" />}
         {isBackProject && (
@@ -111,13 +113,27 @@ export default function Index() {
               >
                 Back this project
               </button>
-              <button type="button" className="btn-bookmark">
-                <Image
-                  fileName="icon-bookmark.svg"
-                  altImage="bookmark icon"
-                  classes="icon-bookmark"
-                />
-                <span className="text-bookmark">Bookmark</span>
+              <button
+                type="button"
+                className={`${
+                  isBookmarked ? 'bookmarked ' : ''
+                }icon btn-bookmark`}
+                onClick={bookmarkHandler}
+              >
+                <svg
+                  className="icon-bookmark"
+                  width="56"
+                  height="56"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g fill="none" fillRule="evenodd">
+                    <circle fill="#2F2F2F" cx="28" cy="28" r="28" />
+                    <path fill="#B1B1B1" d="M23 19v18l5-5.058L33 37V19z" />
+                  </g>
+                </svg>
+                <span className={`text-bookmark`}>
+                  {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+                </span>
               </button>
             </div>
           </section>
@@ -159,7 +175,7 @@ export default function Index() {
               return (
                 <SingleProduct
                   key={prd.product}
-                  classes="product"
+                  classes={`${prd.left === 0 ? 'disabled ' : ''}product`}
                   title={prd.product}
                   pledgePrice={prd.pledge}
                   desc={prd.info}
@@ -169,7 +185,7 @@ export default function Index() {
             })}
           </section>
         </main>
-      </header>
+      </div>
     </Wrapper>
   );
 }

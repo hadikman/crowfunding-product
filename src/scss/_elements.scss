@@ -1,0 +1,13 @@
+@use 'variables';
+
+.btn-primary {
+  font-weight: 700;
+  color: variables.$white;
+  background-color: variables.$moderate-cyan;
+  border-radius: variables.$rounded-btn;
+  cursor: pointer;
+
+  &:hover {
+    background-color: variables.$dark-cyan;
+  }
+}
