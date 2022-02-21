@@ -1,6 +1,7 @@
 @use 'variables';
 @use 'normalize';
 @use 'elements';
+@use 'ui';
 
 .wrapper {
   position: relative;
@@ -16,14 +17,6 @@
   }
 }
 
-.overlay {
-  position: fixed;
-  width: 100%;
-  min-height: 100vh;
-  top: 0;
-  left: 0;
-}
-
 .navbar {
   position: absolute;
   top: 10%;
@@ -33,7 +26,6 @@
   justify-content: space-between;
   align-items: center;
   z-index: 10;
-
   @media (min-width: variables.$mobile-width) {
     top: 12%;
     left: 11.5%;
@@ -48,7 +40,6 @@
 .navbar-mobile {
   display: block;
   cursor: pointer;
-
   @media (min-width: variables.$mobile-width) {
     display: none;
   }
@@ -113,16 +104,25 @@
   section {
     background-color: variables.$white;
     border: 1px solid variables.$light-gray-border;
-    border-radius: variables.$rounded-border;
-    padding-left: 1.3rem;
-    padding-right: 1.3rem;
+    padding-left: variables.$section-spacing-x-mobile;
+    padding-right: variables.$section-spacing-x-mobile;
+
+    &:not(.product) {
+      padding-top: variables.$section-spacing-y-desktop;
+      padding-bottom: variables.$section-spacing-y-desktop;
+    }
+
     margin-left: auto;
     margin-right: auto;
     @media (min-width: variables.$mobile-width) {
       &:not(.product) {
         width: 722px;
-        padding-left: 2.3rem;
-        padding-right: 2.3rem;
+        padding-left: variables.$section-spacing-x-desktop;
+        padding-right: variables.$section-spacing-x-desktop;
+      }
+
+      &.introduce {
+        padding-top: 3rem;
       }
     }
 
@@ -147,8 +147,6 @@
 .introduce {
   position: relative;
   text-align: center;
-  padding-top: 3rem;
-  padding-bottom: 2rem;
 
   .mastercraft-logo {
     position: absolute;
@@ -223,8 +221,6 @@
 }
 
 .backed {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
   text-align: center;
 
   @media (min-width: variables.$mobile-width) {
@@ -286,9 +282,6 @@
 }
 
 .about {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-
   h2 {
     font-size: 1rem;
     margin-bottom: 1.5rem;
@@ -300,7 +293,7 @@
   .product {
     width: 100%;
     border: 1.5px solid variables.$very-light;
-    margin-top: 1.3rem;
+    margin-top: variables.$section-spacing-x-mobile;
 
     h3 {
       @media (min-width: variables.$mobile-width) {
@@ -311,8 +304,8 @@
 }
 
 .product {
-  padding-top: 1rem;
-  padding-bottom: 1.2rem;
+  padding-top: variables.$product-spacing-y;
+  padding-bottom: variables.$product-spacing-y;
 
   h3 {
     font-size: 0.9rem;
@@ -408,11 +401,11 @@
 
   .pledge-single {
     border: 1px solid variables.$light;
-    padding: 1.3rem;
+    padding: variables.$section-spacing-x-mobile;
     border-radius: variables.$rounded-border;
 
     &:not(:last-child) {
-      margin-bottom: 1.3rem;
+      margin-bottom: variables.$section-spacing-x-mobile;
     }
 
     .pledge-header {
@@ -636,6 +629,10 @@
 
 .icon {
   cursor: pointer;
+}
+
+.round {
+  border-radius: variables.$rounded-border;
 }
 
 .bookmarked {
