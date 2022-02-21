@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Live Site
 
-[https://crowdfunding-f-mentor.netlify.app/]
+https://crowdfunding-f-mentor.netlify.app/
 
 ## Available Scripts
 
