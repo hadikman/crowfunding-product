@@ -9,7 +9,7 @@ import {data} from '../store/data';
 export default function Body() {
   const [isBackProject, setIsBackProject] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  console.log('Body');
+
   function closeBackModalHandler() {
     setIsBackProject(preState => !preState);
   }
